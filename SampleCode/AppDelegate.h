@@ -17,7 +17,19 @@
 //
 
 #import <UIKit/UIKit.h>
-
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+#import "Account.h"
+=======
+#import "FBAccount.h"
+>>>>>>> FETCH_HEAD
+=======
+#import "FBAccount.h"
+>>>>>>> FETCH_HEAD
+=======
+#import "FBAccount.h"
+>>>>>>> FETCH_HEAD
 @class GTMOAuth2Authentication;
 
 @interface AppDelegate : UIResponder<UIApplicationDelegate>
@@ -27,4 +39,27 @@
 // The navigation controller.
 @property(strong, nonatomic) UINavigationController *navigationController;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+@property(nonatomic, copy) Account * fbAccount;
+@property(nonatomic, copy) Account * gpAccount;
+
+- (void) storeFBAccount: (Account *) myFBAccount;
+- (void) storeGPAccount: (Account *) myGPAccount;
+=======
+@property(nonatomic, copy) FBAccount * fbAccount;
+
+- (void) storeFBAccount: (FBAccount *) myFBAccount;
+>>>>>>> FETCH_HEAD
+=======
+@property(nonatomic, copy) FBAccount * fbAccount;
+
+- (void) storeFBAccount: (FBAccount *) myFBAccount;
+>>>>>>> FETCH_HEAD
+=======
+@property(nonatomic, copy) FBAccount * fbAccount;
+
+- (void) storeFBAccount: (FBAccount *) myFBAccount;
+>>>>>>> FETCH_HEAD
 @end

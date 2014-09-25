@@ -19,10 +19,25 @@
 #import "MasterViewController.h"
 #import <GooglePlus/GooglePlus.h>
 
-
+static const int kNumSections = 2;
+static NSString * const kSections[kNumSections] = {@"", @"YOUR PROFILE BUILDER"};
 static const int kNumViewControllers = 3;
 static NSString * const kMenuOptions[kNumViewControllers] = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     @"Awareness",@"Sign in", @"Profile" };
+static NSString * const kMenuOptionsOfProfileBuilder[kNumViewControllers] = {
+    @"Basic Information",@"Work Information", @"Education Information" };
+=======
+    @"Misleading",@"Sign in", @"Profile" };
+>>>>>>> FETCH_HEAD
+=======
+    @"Misleading",@"Sign in", @"Profile" };
+>>>>>>> FETCH_HEAD
+=======
+    @"Misleading",@"Sign in", @"Profile" };
+>>>>>>> FETCH_HEAD
 static NSString * const kUnselectableMenuOptions[kNumViewControllers] = {
     nil, nil, @"Profile"};
 static NSString * const kNibNames[kNumViewControllers] = {
@@ -58,12 +73,16 @@ static NSString * const kNibNames[kNumViewControllers] = {
 #pragma mark - UITableViewDelegate/UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 1;
+  return kNumSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
     numberOfRowsInSection:(NSInteger)section {
-  return kNumViewControllers;
+    return kNumViewControllers;
+}
+- (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return kSections[section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -83,18 +102,29 @@ static NSString * const kNibNames[kNumViewControllers] = {
       cell.textLabel.textColor = [UIColor lightGrayColor];
     }
   }
-  cell.textLabel.text = (selectable ? kMenuOptions : kUnselectableMenuOptions)
-      [indexPath.row];
-  cell.accessibilityLabel = cell.textLabel.text;
     
-    UIImage *theImage = [UIImage imageNamed:@"osa_awareness.png"];
-    if (indexPath.row == 1) {
-        theImage = [UIImage imageNamed:@"signin.png"];
+    if(indexPath.section == 0)
+    {
+        cell.textLabel.text = (selectable ? kMenuOptions : kUnselectableMenuOptions)
+        [indexPath.row];
+        cell.accessibilityLabel = cell.textLabel.text;
+        
+        UIImage *theImage = [UIImage imageNamed:@"osa_awareness.png"];
+        if (indexPath.row == 1) {
+            theImage = [UIImage imageNamed:@"signin.png"];
+        }
+        else if (indexPath.row == 2) {
+            theImage = [UIImage imageNamed:@"privacy.png"];
+        }
+        cell.imageView.image = theImage;
+    }else{
+        cell.textLabel.text = kMenuOptionsOfProfileBuilder[indexPath.row];
+        
+        cell.imageView.image = [UIImage imageNamed:@"wrenches.png"];
+        
+
     }
-    else if (indexPath.row == 2) {
-        theImage = [UIImage imageNamed:@"privacy.png"];
-    }
-    cell.imageView.image = theImage;
+  
     
   return cell;
 }
@@ -105,6 +135,9 @@ static NSString * const kNibNames[kNumViewControllers] = {
     if (![self isSelectable:indexPath]) {
         return;
     }
+    // do not allow to open profile builder at the moment
+    if(indexPath.section == 1)
+        return;
   Class nibClass = NSClassFromString(kNibNames[indexPath.row]);
   UIViewController *controller =
       [[nibClass alloc] initWithNibName:nil bundle:nil];
@@ -121,7 +154,8 @@ static NSString * const kNibNames[kNumViewControllers] = {
 #pragma mark - Helper methods
 
 - (BOOL)isSelectable:(NSIndexPath *)indexPath {
-  if (kUnselectableMenuOptions[indexPath.row]) {
+    
+  if (indexPath.section == 0 && kUnselectableMenuOptions[indexPath.row]) {
     // To use Google+ app activities, you need to sign in.
     return [GPPSignIn sharedInstance].authentication != nil;
   }
